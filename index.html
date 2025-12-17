@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Parishe’s Cafe – Digital Menu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Poppins,sans-serif;background:#121212;color:#fff}
+a{text-decoration:none;color:#fff}
+.app{max-width:430px;margin:auto;padding:20px 16px 90px}
+
+/* LOGO */
+.logo{
+  width:130px;height:130px;border-radius:50%;
+  background:linear-gradient(135deg,#ffe08a,#c99700);
+  display:flex;align-items:center;justify-content:center;
+  margin:10px auto 14px;
+  font-family:'Playfair Display',serif;
+  font-size:20px;color:#1a1a1a;text-align:center;
+}
+h1{text-align:center;font-size:22px}
+.tag{text-align:center;font-size:14px;opacity:.85;margin:8px 0 22px}
+
+/* BUTTON */
+.btn{
+  width:100%;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 22px;border-radius:50px;
+  border:1px solid #f5c96b;
+  background:linear-gradient(135deg,rgba(245,201,107,.22),rgba(245,201,107,.06));
+  margin-bottom:14px;cursor:pointer;
+}
+.btn span{flex:1;text-align:center}
+.btn i{color:#fff}
+
+/* PAGES */
+.page{display:none}
+.page.active{display:block}
+.back{margin-bottom:16px;opacity:.8;cursor:pointer}
+
+/* DETAIL */
+.detail{
+  margin:6px 0 20px;padding:16px;
+  border-radius:18px;background:#1c1c1c;
+  border:1px solid rgba(255,255,255,.18);
+  display:none;
+}
+.detail img{width:100%;border-radius:14px;margin-bottom:12px}
+.detail p{font-size:14px;line-height:1.75;margin-bottom:10px}
+.detail b{color:#f5c96b}
+.price{color:#f5c96b;font-weight:600}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<!-- HOME -->
+<div class="page active" id="home">
+  <div class="logo">Parishe’s<br>Cafe</div>
+  <h1>@parishescafe</h1>
+  <div class="tag">Cafe • Maggie • Pasta • Burger • Waffle</div>
+
+  <a class="btn"><i class="fas fa-motorcycle"></i><span>Order on Swiggy</span><i class="fas fa-ellipsis-v"></i></a>
+  <a class="btn"><i class="fas fa-pizza-slice"></i><span>Order on Zomato</span><i class="fas fa-ellipsis-v"></i></a>
+  <a class="btn" href="tel:9595766789"><i class="fas fa-phone"></i><span>Call for Table Reservation</span><i class="fas fa-ellipsis-v"></i></a>
+  <a class="btn" href="https://wa.me/919595766789"><i class="fab fa-whatsapp"></i><span>WhatsApp Reservation</span><i class="fas fa-ellipsis-v"></i></a>
+  <a class="btn"><i class="fas fa-location-dot"></i><span>Find Us on Maps</span><i class="fas fa-ellipsis-v"></i></a>
+
+  <div class="btn" onclick="openPage('categories')">
+    <i class="fas fa-book-open"></i><span>View Full Menu</span><i class="fas fa-ellipsis-v"></i>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<div class="page" id="categories">
+  <div class="back" onclick="openPage('home')">← Back</div>
+  <div class="btn" onclick="openItems('Starters')">⭐ Starters</div>
+  <div class="btn" onclick="openItems('Maggie')">🍜 Maggie</div>
+  <div class="btn" onclick="openItems('Pasta')">🍝 Pasta</div>
+  <div class="btn" onclick="openItems('Veg Burger')">🍔 Veg Burger</div>
+  <div class="btn" onclick="openItems('Nonveg Burger')">🍗 Non-Veg Burger</div>
+  <div class="btn" onclick="openItems('Waffle')">🧇 Waffle</div>
+  <div class="btn" onclick="openItems('Garlic Bread')">🥖 Garlic Bread</div>
+</div>
+
+<!-- ITEMS -->
+<div class="page" id="items"></div>
+
+</div>
+
+<script>
+let openId=null;
+
+const menu={
+"Starters":[
+{n:"French Fries",p:70,img:"https://source.unsplash.com/600x400/?french-fries",about:"Golden fried potato strips served hot.\nA classic starter loved by everyone.",taste:"These fries are crispy on the outside and soft inside. Light salt seasoning enhances the natural potato flavour. Perfect as a quick and comforting snack.",ing:"Fresh potatoes are cut daily. Fried in refined oil at proper temperature. Seasoned lightly before serving."},
+{n:"Mad Fries",p:80,img:"https://source.unsplash.com/600x400/?masala-fries",about:"Classic fries tossed in special masala.\nIndian street style snack.",taste:"Mad fries are spicy and bold in flavour. The masala sticks well to each fry. Ideal for spice lovers.",ing:"Fresh fries are prepared first. House masala is added generously. Butter enhances aroma."},
+{n:"Cheese Shot",p:80,img:"https://source.unsplash.com/600x400/?cheese-balls",about:"Crunchy cheese bites.\nSmall and addictive starter.",taste:"Outer layer is crisp and golden. Cheese inside melts beautifully. Mild and creamy flavour.",ing:"Cheese cubes are crumb coated. Deep fried till golden. Served hot."},
+{n:"Friesy Cheese Fries",p:90,img:"https://source.unsplash.com/600x400/?cheese-fries",about:"Loaded fries with melted cheese.\nCheese lover’s delight.",taste:"Creamy cheese covers every fry. Crispy and smooth textures blend well. Rich and filling snack.",ing:"Fresh fries are topped with cheese sauce. Butter adds richness. Herbs add aroma."},
+{n:"Cheese Ball",p:150,img:"https://source.unsplash.com/600x400/?cheese-balls-snack",about:"Deep fried cheese balls.\nPremium starter dish.",taste:"Crunchy crust with gooey centre. Rich cheese flavour dominates. Very indulgent.",ing:"High quality cheese is used. Breadcrumb coating applied. Fried carefully."}
+],
+
+"Maggie":[
+{n:"Veg Maggie",p:60,img:"https://source.unsplash.com/600x400/?veg-maggi",about:"Classic maggie with vegetables.\nComfort food favourite.",taste:"Light, warm and comforting. Vegetables add freshness. Perfect for quick hunger.",ing:"Maggie noodles cooked fresh. Vegetables added. Butter enhances taste."},
+{n:"Masala Maggie",p:70,img:"https://source.unsplash.com/600x400/?masala-maggi",about:"Street-style extra masala maggie.\nBold flavour.",taste:"Spicy and aromatic. Strong masala taste. Street-food feel.",ing:"Noodles cooked in butter. Extra masala added. Mild spices used."},
+{n:"Cheese Maggie",p:80,img:"https://source.unsplash.com/600x400/?cheese-maggi",about:"Maggie mixed with cheese.\nKids favourite.",taste:"Creamy texture dominates. Cheese balances spice. Rich and comforting.",ing:"Cheese added while hot. Butter used lightly. Noodles cooked fresh."},
+{n:"Paneer Cheese Maggie",p:90,img:"https://source.unsplash.com/600x400/?paneer-maggi",about:"Maggie with paneer and cheese.\nHeavy and filling.",taste:"Rich and creamy taste. Paneer adds bite. Perfect full meal.",ing:"Fresh paneer cubes added. Cheese mixed evenly. Mild spices used."}
+],
+
+"Pasta":[
+{n:"Red Sauce Pasta",p:140,img:"https://source.unsplash.com/600x400/?red-sauce-pasta",about:"Italian tomato based pasta.\nLight and tangy.",taste:"Tangy tomato flavour stands out. Herbs add freshness. Smooth and tasty.",ing:"Pasta cooked al-dente. Tomato sauce prepared fresh. Herbs mixed well."},
+{n:"White Sauce Pasta",p:140,img:"https://source.unsplash.com/600x400/?white-sauce-pasta",about:"Cream based pasta.\nRich and smooth.",taste:"Creamy and mildly cheesy. Sauce coats pasta evenly. Comfort dish.",ing:"Fresh cream used. Cheese blended smoothly. Pasta cooked fresh."},
+{n:"Creamy Sauce Pasta",p:140,img:"https://source.unsplash.com/600x400/?creamy-pasta",about:"Extra creamy pasta.\nChef special.",taste:"Very smooth and rich. Indulgent texture. Perfect for creamy lovers.",ing:"Extra cream used. Butter enhances richness. Pasta cooked properly."}
+],
+
+"Veg Burger":[
+{n:"Mini Tikki Burger",p:50,img:"https://source.unsplash.com/600x400/?veg-burger",about:"Small veg burger.\nQuick snack.",taste:"Crispy tikki with soft bun. Mild flavour. Light and tasty.",ing:"Veg tikki prepared fresh. Soft bun used. Light sauces added."},
+{n:"Aloo Tikki Burger",p:80,img:"https://source.unsplash.com/600x400/?aloo-tikki-burger",about:"Indian style aloo tikki burger.\nStreet food classic.",taste:"Spicy tikki dominates. Sauces add tang. Crunchy and filling.",ing:"Potato tikki seasoned well. Onions add crunch. Buns toasted."},
+{n:"Corn Cheese Burger",p:90,img:"https://source.unsplash.com/600x400/?corn-cheese-burger",about:"Corn and cheese patty burger.\nSoft and mild.",taste:"Sweet corn blends with cheese. Creamy texture. Kid friendly.",ing:"Corn cheese patty used. Cheese slice added. Soft bun used."},
+{n:"Spicy Paneer Burger",p:110,img:"https://source.unsplash.com/600x400/?paneer-burger",about:"Paneer based spicy burger.\nRich cafe style.",taste:"Paneer flavour strong. Spicy kick present. Very filling.",ing:"Paneer patty fresh. Spices balanced well. Sauces added."},
+{n:"Paneer Tikka Burger",p:110,img:"https://source.unsplash.com/600x400/?paneer-tikka-burger",about:"Smoky paneer tikka burger.\nCafe special.",taste:"Smoky and spicy. Rich tikka flavour. Premium feel.",ing:"Paneer tikka marinated. Buns toasted lightly. Creamy sauces used."}
+],
+
+"Nonveg Burger":[
+{n:"Chicken Tikka Burger",p:130,img:"https://source.unsplash.com/600x400/?chicken-tikka-burger",about:"Chicken tikka stuffed burger.\nNon-veg bestseller.",taste:"Juicy and smoky chicken. Rich spices. Highly satisfying.",ing:"Chicken marinated fresh. Buns soft. Sauces balanced."},
+{n:"Chicken Patty Burger",p:130,img:"https://source.unsplash.com/600x400/?chicken-patty-burger",about:"Classic chicken patty burger.\nSimple and tasty.",taste:"Crispy patty with juicy inside. Mild spice. Easy to enjoy.",ing:"Chicken patty fried fresh. Soft bun used. Sauces added."},
+{n:"Chicken Cheese Burger",p:130,img:"https://source.unsplash.com/600x400/?chicken-cheese-burger",about:"Chicken burger with cheese.\nRich and filling.",taste:"Cheese melts over chicken. Creamy and juicy. Comfort meal.",ing:"Chicken patty cooked properly. Cheese slice added. Buns toasted."},
+{n:"Double Decker Burger",p:170,img:"https://source.unsplash.com/600x400/?double-burger",about:"Double patty burger.\nHeavy meal.",taste:"Very filling and rich. Layers of flavour. Perfect for big hunger.",ing:"Two patties stacked. Cheese layered. Soft buns used."}
+],
+
+"Waffle":[
+{n:"Vanilla Waffle",p:100,img:"https://source.unsplash.com/600x400/?vanilla-waffle",about:"Classic vanilla waffle.\nLight dessert.",taste:"Soft inside and crispy outside. Mild vanilla flavour. Light sweetness.",ing:"Fresh batter prepared. Vanilla essence added. Butter used."},
+{n:"Chocolate Waffle",p:100,img:"https://source.unsplash.com/600x400/?chocolate-waffle",about:"Chocolate flavoured waffle.\nSweet treat.",taste:"Rich chocolate taste. Soft and crunchy. Very indulgent.",ing:"Chocolate sauce mixed. Butter adds richness. Sugar balanced."},
+{n:"Peanut Waffle",p:120,img:"https://source.unsplash.com/600x400/?peanut-waffle",about:"Nutty peanut waffle.\nCrunchy dessert.",taste:"Strong peanut flavour. Crunchy texture. Sweet and filling.",ing:"Peanut butter added. Batter mixed fresh. Butter enhances taste."},
+{n:"Caramel Waffle",p:120,img:"https://source.unsplash.com/600x400/?caramel-waffle",about:"Caramel coated waffle.\nSweet delight.",taste:"Smooth caramel sweetness. Rich mouthfeel. Loved by many.",ing:"Caramel sauce used generously. Fresh batter prepared. Butter added."},
+{n:"Kitkat Waffle",p:140,img:"https://source.unsplash.com/600x400/?kitkat-waffle",about:"Kitkat loaded waffle.\nKids favourite.",taste:"Chocolate crunch in every bite. Fun and sweet. Perfect dessert.",ing:"Kitkat pieces crushed. Chocolate sauce added. Batter prepared fresh."}
+],
+
+"Garlic Bread":[
+{n:"Corn Chilli Garlic Bread",p:100,img:"https://source.unsplash.com/600x400/?corn-garlic-bread",about:"Spicy corn garlic bread.\nPerfect starter.",taste:"Garlic aroma strong. Corn adds sweetness. Spicy kick present.",ing:"Bread toasted with garlic butter. Corn and chilli added. Herbs sprinkled."},
+{n:"Cheese Garlic Bread",p:110,img:"https://source.unsplash.com/600x400/?cheese-garlic-bread",about:"Cheesy garlic bread.\nCafe favourite.",taste:"Cheese melts perfectly. Garlic flavour rich. Soft and indulgent.",ing:"Cheese spread generously. Garlic butter used. Bread baked fresh."},
+{n:"Onion Chilli Garlic Bread",p:110,img:"https://source.unsplash.com/600x400/?onion-garlic-bread",about:"Onion chilli garlic bread.\nSpicy snack.",taste:"Onion crunch adds texture. Chilli brings heat. Garlic dominates.",ing:"Fresh onions sliced. Garlic butter applied. Bread baked till crisp."}
+]
+};
+
+function openPage(id){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+}
+
+function openItems(cat){
+ let box=document.getElementById("items");
+ box.innerHTML=`<div class="back" onclick="openPage('categories')">← Back</div>`;
+ menu[cat].forEach((x,i)=>{
+  box.innerHTML+=`
+   <div class="btn" onclick="toggle('${cat}',${i})">
+     <span>${x.n}</span><span class="price">₹${x.p}</span>
+   </div>
+   <div class="detail" id="${cat}-${i}">
+    <img src="${x.img}">
+    <p>${x.about.replaceAll("\n","<br>")}</p>
+    <p><b>Taste & Experience</b><br>${x.taste}</p>
+    <p><b>Ingredients Used</b><br>${x.ing}</p>
+   </div>`;
+ });
+ openPage("items");
+}
+
+function toggle(cat,i){
+ const id=cat+"-"+i;
+ if(openId===id){
+  document.getElementById(id).style.display="none";
+  openId=null;return;
+ }
+ document.querySelectorAll('.detail').forEach(d=>d.style.display="none");
+ document.getElementById(id).style.display="block";
+ openId=id;
+}
+</script>
+
+</body>
+</html>
